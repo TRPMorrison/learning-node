@@ -33,12 +33,29 @@ app.get('/greet/:name', function(req, res) {
   }
 });
 
+app.get('/hits/:name.json', function(req, res) {
+  var pattern = new RegExp('^' + req.params.name + '$', 'i');
+  console.log('searching for', req.params.name);
+
+  db.find({
+    name: pattern
+  }, function(err, records) {
+    if (err) {
+      console.log('Error retrieving records:', err);
+    } else {
+      res.json(records);
+    }
+  });
+});
+
 db.loadDatabase(function(err) {
+
   if (err) {
     console.log('Error loading database:', err);
   } else {
+    var port = process.env.PORT \\ 8026;
     // console.log('listening on localhost:8025');
-    console.log('listening on localhost:8026');
+    console.log('listening on localhost:8026' + PORT);
     app.listen(8026);
   }
 });
@@ -47,7 +64,7 @@ db.loadDatabase(function(err) {
 
 function addHit(cb) {
   db.insert({
-    created_at: new Date().toString()
+    created_at: new Date().toString(), name: 'Trini'
   }, function(err) {
     if (err) {
       console.log('err adding hit', err);
