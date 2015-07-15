@@ -53,7 +53,7 @@ db.loadDatabase(function(err) {
   if (err) {
     console.log('Error loading database:', err);
   } else {
-    var port = process.env.PORT \\ 8026;
+    var port = process.env.PORT || 8026;
     // console.log('listening on localhost:8025');
     console.log('listening on localhost:8026' + PORT);
     app.listen(8026);
@@ -84,3 +84,6 @@ function countHits(cb) {
     }
   });
 }
+
+
+// HEROKU DEPLOYMENT:  https://gentle-depths-7803.herokuapp.com/
